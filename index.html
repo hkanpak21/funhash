@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IKH Explorer | Educational Blockchain Simulator</title>
+    <title>İKH Kaşifi | Eğitici Blokzincir Simülatörü</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="glass-bg"></div>
-    
+
     <nav class="sidebar">
         <div class="sidebar-header">
             <span class="logo-icon">🛡️</span>
-            <h1>IKH Explorer</h1>
+            <h1>İKH Kaşifi</h1>
         </div>
         <ul class="nav-links">
             <li class="active" data-module="hashing">
                 <span class="icon">🔍</span>
-                <span>Hashing Simulator</span>
+                <span>Özetleme Simülatörü</span>
             </li>
             <li data-module="avalanche">
                 <span class="icon">⚡</span>
-                <span>Avalanche Effect</span>
+                <span>Çığ Etkisi</span>
             </li>
             <li data-module="blockchain">
                 <span class="icon">⛓️</span>
-                <span>Visual Blockchain</span>
+                <span>Görsel Blokzincir</span>
             </li>
         </ul>
         <div class="sidebar-footer">
-            <p>Educational Tool v1.0</p>
+            <p>Eğitici Araç v1.0</p>
         </div>
     </nav>
 
@@ -38,31 +41,31 @@
         <!-- Hashing Module -->
         <section id="hashing-module" class="module active">
             <header>
-                <h2>🔍 Hashing Simulator</h2>
-                <p>Turn the "black box" of hashing into a transparent process using irrational numbers.</p>
+                <h2>🔍 Özetleme Simülatörü</h2>
+                <p>İrrasyonel sayıları kullanarak özetleme (hashing) sürecini şeffaf bir şekilde inceleyin.</p>
             </header>
-            
+
             <div class="input-card">
-                <label for="hash-input">Enter Text (A-Z):</label>
+                <label for="hash-input">Metin Girin (A-Z):</label>
                 <input type="text" id="hash-input" value="MARMARA" maxlength="32">
             </div>
 
             <div class="output-container">
-                <h3>Final Digest (256-bit)</h3>
+                <h3>Nihai Özet (256-bit)</h3>
                 <div id="final-hash" class="hash-display">00000...</div>
             </div>
 
             <div class="table-container">
-                <h3>Step-by-Step Calculation</h3>
+                <h3>Adım Adım Hesaplama</h3>
                 <table id="steps-table">
                     <thead>
                         <tr>
-                            <th>Char</th>
-                            <th>Code</th>
-                            <th>&pi; Digit</th>
-                            <th>e Digit</th>
-                            <th>&phi; Digit</th>
-                            <th>Calculation</th>
+                            <th>Karakter</th>
+                            <th>Kod</th>
+                            <th>&pi; Basamağı</th>
+                            <th>e Basamağı</th>
+                            <th>&phi; Basamağı</th>
+                            <th>Hesaplama</th>
                             <th>Mod 257</th>
                         </tr>
                     </thead>
@@ -74,18 +77,18 @@
         <!-- Avalanche Module -->
         <section id="avalanche-module" class="module">
             <header>
-                <h2>⚡ Avalanche Effect Analysis</h2>
-                <p>Observe how a tiny change in input results in a massive change in the hash.</p>
+                <h2>⚡ Çığ Etkisi (Avalanche Effect) Analizi</h2>
+                <p>Girdideki küçük bir değişikliğin özette nasıl devasa bir fark yarattığını gözlemleyin.</p>
             </header>
 
             <div class="comparison-grid">
                 <div class="input-card">
-                    <label>Input A:</label>
+                    <label>Girdi A:</label>
                     <input type="text" id="ava-input-a" value="MARMARA">
                     <div id="ava-hash-a" class="hash-display mini"></div>
                 </div>
                 <div class="input-card">
-                    <label>Input B:</label>
+                    <label>Girdi B:</label>
                     <input type="text" id="ava-input-b" value="MERMARA">
                     <div id="ava-hash-b" class="hash-display mini"></div>
                 </div>
@@ -93,25 +96,25 @@
 
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <label>Hamming Distance</label>
-                    <div id="metric-distance" class="metric-val">0 bits</div>
+                    <label>Hamming Mesafesi</label>
+                    <div id="metric-distance" class="metric-val">0 bit</div>
                 </div>
                 <div class="metric-card">
-                    <label>Change Percentage</label>
+                    <label>Değişim Yüzdesi</label>
                     <div id="metric-percent" class="metric-val">0.00%</div>
                 </div>
             </div>
 
             <div class="chart-container">
-                <h3>Avalanche Comparison</h3>
+                <h3>Çığ Karşılaştırması</h3>
                 <div class="bar-chart">
-                    <div id="bar-same" class="bar"><span>Same Bits</span></div>
-                    <div id="bar-changed" class="bar changed"><span>Changed Bits</span></div>
+                    <div id="bar-same" class="bar"><span>Aynı Bitler</span></div>
+                    <div id="bar-changed" class="bar changed"><span>Değişen Bitler</span></div>
                 </div>
             </div>
 
             <div class="diff-container">
-                <h3>Bit-level Diff (Binary)</h3>
+                <h3>Bit Seviyesinde Fark (İkili Sistem)</h3>
                 <div id="bit-diff" class="bit-grid"></div>
             </div>
         </section>
@@ -119,16 +122,17 @@
         <!-- Blockchain Module -->
         <section id="blockchain-module" class="module">
             <header>
-                <h2>⛓️ Visual Blockchain</h2>
-                <p>Understand how hashing secures a chain of blocks and detects tampering.</p>
+                <h2>⛓️ Görsel Blokzincir</h2>
+                <p>Özetleme işleminin bir blok zincirini nasıl güvence altına aldığını ve manipülasyonu nasıl tespit
+                    ettiğini anlayın.</p>
             </header>
 
             <div class="blockchain-actions">
                 <div class="input-card inline">
-                    <input type="text" id="new-block-data" placeholder="Enter block data...">
-                    <button id="add-block-btn">Add Block</button>
+                    <input type="text" id="new-block-data" placeholder="Blok verisi girin...">
+                    <button id="add-block-btn">Blok Ekle</button>
                 </div>
-                <button id="reset-chain-btn" class="secondary">Reset Chain</button>
+                <button id="reset-chain-btn" class="secondary">Zinciri Sıfırla</button>
             </div>
 
             <div id="blockchain-container" class="chain-list"></div>
@@ -137,4 +141,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

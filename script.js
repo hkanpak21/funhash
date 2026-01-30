@@ -140,11 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const percent = ((distance / 256) * 100).toFixed(2);
-        document.getElementById('metric-distance').textContent = `${distance} bits`;
-        document.getElementById('metric-percent').textContent = `${percent}%`;
+        document.getElementById('metric-distance').textContent = `${distance} bit`;
+        document.getElementById('metric-percent').textContent = `%${percent}`;
 
         document.getElementById('bar-changed').style.width = `${percent}%`;
         document.getElementById('bar-same').style.width = `${100 - percent}%`;
+
+        document.getElementById('bar-changed').querySelector('span').textContent = 'Değişen Bitler';
+        document.getElementById('bar-same').querySelector('span').textContent = 'Aynı Bitler';
 
         document.getElementById('bit-diff').innerHTML = diffHtml;
     };
@@ -166,17 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return `
                 <div class="block-card ${isValid ? 'valid' : 'invalid'}">
                     <div class="block-header">
-                        <h4>Block #${block.index} ${isValid ? '✅' : '❌'}</h4>
-                        <button class="secondary mini" onclick="toggleEdit(${i})">✏️ Edit</button>
+                        <h4>Blok #${block.index} ${isValid ? '✅' : '❌'}</h4>
+                        <button class="secondary mini" onclick="toggleEdit(${i})">✏️ Düzenle</button>
                     </div>
                     <div class="block-content">
-                        <p><strong>Data:</strong> ${block.data}</p>
-                        <p class="hash-link ${isBroken ? 'alert' : ''}"><strong>Prev Hash:</strong><br>${block.prevHash}</p>
-                        <p class="hash-link ${isTampered ? 'alert' : ''}"><strong>Hash:</strong><br>${block.hash}</p>
+                        <p><strong>Veri:</strong> ${block.data}</p>
+                        <p class="hash-link ${isBroken ? 'alert' : ''}"><strong>Önceki Özet:</strong><br>${block.prevHash}</p>
+                        <p class="hash-link ${isTampered ? 'alert' : ''}"><strong>Özet:</strong><br>${block.hash}</p>
                     </div>
                     <div id="edit-ui-${i}" class="edit-ui" style="display: none;">
                         <input type="text" id="edit-input-${i}" value="${block.data}">
-                        <button onclick="saveEdit(${i})">Update Data</button>
+                        <button onclick="saveEdit(${i})">Veriyi Güncelle</button>
                     </div>
                 </div>
             `;
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('add-block-btn').addEventListener('click', () => {
-        const data = document.getElementById('new-block-data').value || "New Data";
+        const data = document.getElementById('new-block-data').value || "Yeni Veri";
         const prevHash = blockchain[blockchain.length - 1].hash;
         const newBlock = {
             index: blockchain.length,
@@ -210,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('reset-chain-btn').addEventListener('click', () => {
-        blockchain = [{ index: 0, data: "Genesis Block", prevHash: "0".repeat(64) }];
+        blockchain = [{ index: 0, data: "Genesis Blok", prevHash: "0".repeat(64) }];
         blockchain[0].hash = ikh.hash(blockchain[0].data + blockchain[0].prevHash);
         renderBlockchain();
     });
