@@ -18,12 +18,13 @@ class IKH:
         """
         Calculates (Code * pi) + (Index * e) + phi mod 257
         """
+        i = index + 1
         code = ord(char.upper()) - ord('A') + 1
         pi_d = self.get_digit(self.pi_digits, index)
         e_d = self.get_digit(self.e_digits, index)
         phi_d = self.get_digit(self.phi_digits, index)
         
-        raw_val = (code * pi_d) + (index * e_d) + phi_d
+        raw_val = (code * pi_d) + (i * e_d) + phi_d
         mod_val = raw_val % 257
         
         return {
@@ -32,9 +33,10 @@ class IKH:
             "pi_digit": pi_d,
             "e_digit": e_d,
             "phi_digit": phi_d,
-            "calculation": f"({code} * {pi_d}) + ({index} * {e_d}) + {phi_d}",
+            "calculation": f"({code} * {pi_d}) + ({i} * {e_d}) + {phi_d}",
             "result": raw_val,
-            "mod_257": mod_val
+            "mod_257": mod_val,
+            "index": i
         }
 
     def hash(self, text):

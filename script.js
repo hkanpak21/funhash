@@ -10,12 +10,13 @@ class IKH {
     }
 
     computeStep(char, index) {
+        const i = index + 1;
         const code = char.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0) + 1;
         const piD = this.getDigit(this.piDigits, index);
         const eD = this.getDigit(this.eDigits, index);
         const phiD = this.getDigit(this.phiDigits, index);
 
-        const rawVal = (code * piD) + (index * eD) + phiD;
+        const rawVal = (code * piD) + (i * eD) + phiD;
         const modVal = rawVal % 257;
 
         return {
@@ -24,9 +25,10 @@ class IKH {
             piDigit: piD,
             eDigit: eD,
             phiDigit: phiD,
-            calculation: `(${code} * ${piD}) + (${index} * ${eD}) + ${phiD}`,
+            calculation: `(${code} * ${piD}) + (${i} * ${eD}) + ${phiD}`,
             result: rawVal,
-            mod257: modVal
+            mod257: modVal,
+            index: i
         };
     }
 
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tbody = document.querySelector('#steps-table tbody');
         tbody.innerHTML = steps.map(s => `
             <tr>
+                <td>${s.index}</td>
                 <td>${s.char}</td>
                 <td>${s.code}</td>
                 <td>${s.piDigit}</td>
