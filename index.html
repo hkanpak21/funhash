@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKH Explorer | Educational Blockchain Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">🛡️</span>
+            <h1>IKH Explorer</h1>
+        </div>
+        <ul class="nav-links">
+            <li class="active" data-module="hashing">
+                <span class="icon">🔍</span>
+                <span>Hashing Simulator</span>
+            </li>
+            <li data-module="avalanche">
+                <span class="icon">⚡</span>
+                <span>Avalanche Effect</span>
+            </li>
+            <li data-module="blockchain">
+                <span class="icon">⛓️</span>
+                <span>Visual Blockchain</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>Educational Tool v1.0</p>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- Hashing Module -->
+        <section id="hashing-module" class="module active">
+            <header>
+                <h2>🔍 Hashing Simulator</h2>
+                <p>Turn the "black box" of hashing into a transparent process using irrational numbers.</p>
+            </header>
+            
+            <div class="input-card">
+                <label for="hash-input">Enter Text (A-Z):</label>
+                <input type="text" id="hash-input" value="MARMARA" maxlength="32">
+            </div>
+
+            <div class="output-container">
+                <h3>Final Digest (256-bit)</h3>
+                <div id="final-hash" class="hash-display">00000...</div>
+            </div>
+
+            <div class="table-container">
+                <h3>Step-by-Step Calculation</h3>
+                <table id="steps-table">
+                    <thead>
+                        <tr>
+                            <th>Char</th>
+                            <th>Code</th>
+                            <th>&pi; Digit</th>
+                            <th>e Digit</th>
+                            <th>&phi; Digit</th>
+                            <th>Calculation</th>
+                            <th>Mod 257</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Avalanche Module -->
+        <section id="avalanche-module" class="module">
+            <header>
+                <h2>⚡ Avalanche Effect Analysis</h2>
+                <p>Observe how a tiny change in input results in a massive change in the hash.</p>
+            </header>
+
+            <div class="comparison-grid">
+                <div class="input-card">
+                    <label>Input A:</label>
+                    <input type="text" id="ava-input-a" value="MARMARA">
+                    <div id="ava-hash-a" class="hash-display mini"></div>
+                </div>
+                <div class="input-card">
+                    <label>Input B:</label>
+                    <input type="text" id="ava-input-b" value="MERMARA">
+                    <div id="ava-hash-b" class="hash-display mini"></div>
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <label>Hamming Distance</label>
+                    <div id="metric-distance" class="metric-val">0 bits</div>
+                </div>
+                <div class="metric-card">
+                    <label>Change Percentage</label>
+                    <div id="metric-percent" class="metric-val">0.00%</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Avalanche Comparison</h3>
+                <div class="bar-chart">
+                    <div id="bar-same" class="bar"><span>Same Bits</span></div>
+                    <div id="bar-changed" class="bar changed"><span>Changed Bits</span></div>
+                </div>
+            </div>
+
+            <div class="diff-container">
+                <h3>Bit-level Diff (Binary)</h3>
+                <div id="bit-diff" class="bit-grid"></div>
+            </div>
+        </section>
+
+        <!-- Blockchain Module -->
+        <section id="blockchain-module" class="module">
+            <header>
+                <h2>⛓️ Visual Blockchain</h2>
+                <p>Understand how hashing secures a chain of blocks and detects tampering.</p>
+            </header>
+
+            <div class="blockchain-actions">
+                <div class="input-card inline">
+                    <input type="text" id="new-block-data" placeholder="Enter block data...">
+                    <button id="add-block-btn">Add Block</button>
+                </div>
+                <button id="reset-chain-btn" class="secondary">Reset Chain</button>
+            </div>
+
+            <div id="blockchain-container" class="chain-list"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
