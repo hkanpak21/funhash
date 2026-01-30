@@ -62,7 +62,7 @@ class IKH {
 // App Instance
 const ikh = new IKH();
 let blockchain = [
-    { index: 0, data: "Genesis Block", prevHash: "0".repeat(64) }
+    { index: 1, data: "Genesis Blok", prevHash: "0".repeat(64) }
 ];
 blockchain[0].hash = ikh.hash(blockchain[0].data + blockchain[0].prevHash);
 
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = document.getElementById('new-block-data').value || "Yeni Veri";
         const prevHash = blockchain[blockchain.length - 1].hash;
         const newBlock = {
-            index: blockchain.length,
+            index: blockchain.length + 1,
             data: data,
             prevHash: prevHash,
             hash: ikh.hash(data + prevHash)
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('reset-chain-btn').addEventListener('click', () => {
-        blockchain = [{ index: 0, data: "Genesis Blok", prevHash: "0".repeat(64) }];
+        blockchain = [{ index: 1, data: "Genesis Blok", prevHash: "0".repeat(64) }];
         blockchain[0].hash = ikh.hash(blockchain[0].data + blockchain[0].prevHash);
         renderBlockchain();
     });
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="fork-label">${label}</div>
                     ${chain.map((b, i) => `
                         <div class="fork-block ${b.valid ? 'valid' : 'invalid'}">
-                            <b>Blok ${i}</b><br>
+                            <b>Blok ${i + 1}</b><br>
                             <small>${b.hash.substring(0, 10)}...</small>
                         </div>
                     `).join('')}
