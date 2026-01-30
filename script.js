@@ -158,24 +158,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Module 3: Blockchain
     const renderBlockchain = () => {
         const container = document.getElementById('blockchain-container');
+        let chainIsValid = true;
+
         container.innerHTML = blockchain.map((block, i) => {
             const recalcHash = ikh.hash(block.data + block.prevHash);
-            const isTampered = block.hash !== recalcHash;
-            let isBroken = false;
-            if (i > 0) isBroken = block.prevHash !== blockchain[i - 1].hash;
+            const isSelfInvalid = block.hash !== recalcHash;
 
-            const isValid = !isTampered && !isBroken;
+            // Propagation: if any previous block was invalid, this one is too
+            let prevHashMatches = true;
+            if (i > 0) {
+                prevHashMatches = block.prevHash === blockchain[i - 1].hash;
+            }
+
+            if (isSelfInvalid || !prevHashMatches || !chainIsValid) {
+                chainIsValid = false;
+            }
+
+            const displayValid = chainIsValid;
 
             return `
-                <div class="block-card ${isValid ? 'valid' : 'invalid'}">
+                <div class="block-card ${displayValid ? 'valid' : 'invalid'}">
                     <div class="block-header">
-                        <h4>Blok #${block.index} ${isValid ? '✅' : '❌'}</h4>
+                        <h4>Blok #${block.index} ${displayValid ? '✅' : '❌'}</h4>
                         <button class="secondary mini" onclick="toggleEdit(${i})">✏️ Düzenle</button>
                     </div>
                     <div class="block-content">
                         <p><strong>Veri:</strong> ${block.data}</p>
-                        <p class="hash-link ${isBroken ? 'alert' : ''}"><strong>Önceki Özet:</strong><br>${block.prevHash}</p>
-                        <p class="hash-link ${isTampered ? 'alert' : ''}"><strong>Özet:</strong><br>${block.hash}</p>
+                        <p class="hash-link ${!prevHashMatches ? 'alert' : ''}"><strong>Önceki Özet:</strong><br>${block.prevHash}</p>
+                        <p class="hash-link ${isSelfInvalid ? 'alert' : ''}"><strong>Özet:</strong><br>${block.hash}</p>
                     </div>
                     <div id="edit-ui-${i}" class="edit-ui" style="display: none;">
                         <input type="text" id="edit-input-${i}" value="${block.data}">
@@ -194,7 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.saveEdit = (i) => {
         const val = document.getElementById(`edit-input-${i}`).value;
         blockchain[i].data = val;
-        // deliberate: we DON'T update the hash to show tampering
+        // In this simulation, we don't automatically fix the hash when "editing"
+        // to show how it breaks the chain validation.
         renderBlockchain();
     };
 
@@ -217,4 +228,81 @@ document.addEventListener('DOMContentLoaded', () => {
         blockchain[0].hash = ikh.hash(blockchain[0].data + blockchain[0].prevHash);
         renderBlockchain();
     });
+
+    // Module 4: Forking Attack Simulation
+    let forkActive = false;
+    let honestChain = [];
+    let maliciousChain = [];
+
+    const renderFork = () => {
+        const visualizer = document.getElementById('fork-visualizer');
+
+        const renderPath = (chain, label, type) => {
+            return `
+                <div class="fork-path ${type}">
+                    <div class="fork-label">${label}</div>
+                    ${chain.map((b, i) => `
+                        <div class="fork-block ${b.valid ? 'valid' : 'invalid'}">
+                            <b>Blok ${i}</b><br>
+                            <small>${b.hash.substring(0, 10)}...</small>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        };
+
+        visualizer.innerHTML = `
+            ${renderPath(honestChain, "Dürüst Ağ (Mavi)", "honest")}
+            ${renderPath(maliciousChain, "Saldırgan (Kırmızı)", "malicious")}
+        `;
+    };
+
+    document.getElementById('start-fork-btn').addEventListener('click', () => {
+        if (forkActive) return;
+        forkActive = true;
+        document.getElementById('fork-explanation').style.display = 'block';
+
+        // Initial state: both chains same for block 0
+        const genesisHash = ikh.hash("Genesis");
+        honestChain = [{ hash: genesisHash, valid: true }];
+        maliciousChain = [{ hash: genesisHash, valid: true }];
+
+        let step = 0;
+        const interval = setInterval(() => {
+            step++;
+
+            // Honest nodes add blocks consistently
+            const hPrev = honestChain[honestChain.length - 1].hash;
+            honestChain.push({ hash: ikh.hash("Dürüst Blok " + step + hPrev), valid: true });
+
+            // Malicious node tries to create a fork from block 1 by changing data
+            if (step === 1) {
+                // Change history at block 1
+                maliciousChain.push({ hash: ikh.hash("HACKED " + step), valid: true });
+            } else if (step > 1) {
+                // Malicious node tries to catch up but is slower or different
+                const mPrev = maliciousChain[maliciousChain.length - 1].hash;
+                maliciousChain.push({ hash: ikh.hash("Saldırı Bloğu " + step + mPrev), valid: true });
+            }
+
+            renderFork();
+
+            if (step >= 6) {
+                clearInterval(interval);
+                forkActive = false;
+            }
+        }, 1000);
+    });
+
+    document.getElementById('reset-fork-btn').addEventListener('click', () => {
+        honestChain = [];
+        maliciousChain = [];
+        document.getElementById('fork-visualizer').innerHTML = '';
+        document.getElementById('fork-explanation').style.display = 'none';
+        forkActive = false;
+    });
+
+    // Initial renders
+    renderBlockchain();
+    renderFork();
 });

@@ -31,6 +31,10 @@
                 <span class="icon">⛓️</span>
                 <span>Görsel Blokzincir</span>
             </li>
+            <li data-module="fork">
+                <span class="icon">🔱</span>
+                <span>Çatal Saldırısı</span>
+            </li>
         </ul>
         <div class="sidebar-footer">
             <p>Eğitici Araç v1.0</p>
@@ -136,6 +140,32 @@
             </div>
 
             <div id="blockchain-container" class="chain-list"></div>
+        </section>
+
+        <!-- Forking Module -->
+        <section id="fork-module" class="module">
+            <header>
+                <h2>🔱 Çatal Saldırısı (Forking Attack) Deneyi</h2>
+                <p>Bir saldırganın geçmişi değiştirip kendi zincirini nasıl oluşturmaya çalıştığını ve ağın neden en
+                    uzun (en güvenli) zinciri seçtiğini görün.</p>
+            </header>
+
+            <div class="blockchain-actions">
+                <button id="start-fork-btn">Saldırıyı Başlat</button>
+                <button id="reset-fork-btn" class="secondary">Sıfırla</button>
+            </div>
+
+            <div class="fork-container" id="fork-visualizer">
+                <!-- Fork content will be injected here -->
+            </div>
+
+            <div id="fork-explanation" class="info-card" style="margin-top: 2rem; display: none;">
+                <h3>🛡️ Ağ Nasıl Korunur?</h3>
+                <p>Saldırgan (Kırmızı Zincir) geçmişteki bir bloğu değiştirdiğinde, o bloğun özeti tamamen değişir. Bu,
+                    sonraki tüm blokların "Önceki Özet" alanlarını geçersiz kılar. Saldırganın ağı kandırmak için tüm
+                    hızıyla yeni bloklar üretmesi gerekir, ancak dürüst düğümler (Mavi Zincir) en uzun geçerli zinciri
+                    takip etmeye devam eder.</p>
+            </div>
         </section>
     </main>
 
